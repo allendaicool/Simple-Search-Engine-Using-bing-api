@@ -1,7 +1,6 @@
-JFLAGS = -g
-jc = javac
+FLAGS = -g
+JC = javac
 JVM = java
-BIN = bin
 SRC = src
 LIB = lib
 
@@ -9,19 +8,15 @@ LIB = lib
 
 JAR = commons-codec-1.10.jar
 
-.java.class:
-		$(JC) -cp $(LIB)/$(JAR) $(JFLAGS) $*.java
-
-CLASSES = SimpleSearchEngine.java
-
 MAIN = SimpleSearchEngine
 
-default: $(BIN)
+default: classes
 
-classes: $(CLASSES:.java=.class)
+classes:
+	$(JC) -cp $(LIB)/$(JAR) $(JFLAGS) $(SRC)/*.java -d .
 
 run: $(MAIN).class
-		$(JVM) -cp $(LIB)/$(JAR):$(BIN) $(MAIN)
+	$(JVM) -cp $(LIB)/$(JAR):. $(MAIN)
 
 clean:
-		$(RM) $(BIN)/*.class
+	$(RM) *.class
